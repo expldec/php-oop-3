@@ -1,41 +1,3 @@
-
-<?php
-// importiamo tutti i file necessari con le classi
-require_once __DIR__ . "/PetFood.php";
-require_once __DIR__ . "/PetToy.php";
-require_once __DIR__ . "/User.php";
-
-
-//creiamo alcuni prodotti
-$cat_food = new PetFood("Conad", "MicioMiao", 4, "Crocchette per gatti adulti", 2000, "Gatto");
-$dog_food = new PetFood("Conad", "BauGnam", 5, "Crocchette per cani", 5000, "Cane");
-$cat_toy_mouse = new PetToy("Giochi Pelosi", "JerryBot", 5, "Topo meccanico", "Gatto");
-
-
-// creiamo un utente e aggiungiamo 2 prodotti al carrello
-$morgan = new User("morgan", "morgan@gmail.com",12345678,false);
-$morgan->addProductToCart($cat_food);
-$morgan->addProductToCart($cat_toy_mouse);
-
-// rendiamo un prodotto non disponibile
-$cat_toy_mouse->in_stock = false;
-
-// proviamo ad aggiungerlo al carrello e mostriamo un messaggio se possiamo aggiungerlo oppure no.
-$result = $morgan->addProductToCart($cat_toy_mouse);
-if ($result) {
-    echo "Topo meccanico aggiunto";
-} else {
-    echo "Topo Meccanico non è più disponibile";
-}
-
-echo "<br>";
-
-// registriamo l'utente
-echo $morgan->register();
-
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,6 +7,54 @@ echo $morgan->register();
     <title>Document</title>
 </head>
 <body>
+
+
+<?php
+// importiamo tutti i file necessari con le classi
+require_once __DIR__ . "/PetFood.php";
+require_once __DIR__ . "/PetToy.php";
+require_once __DIR__ . "/Apparel.php";
+require_once __DIR__ . "/User.php";
+
+
+//creiamo alcuni prodotti
+$cat_food = new PetFood("Conad", "MicioMiao", 4, "Crocchette per gatti adulti", 2000, "Gatto");
+$dog_food = new PetFood("Conad", "BauGnam", 5, "Crocchette per cani", 5000, "Cane");
+$cat_toy_mouse = new PetToy("Giochi Pelosi", "JerryBot", 5, "Topo meccanico", "Gatto");
+$tshirt = new Apparel("Marca Top", "T-shirt", 15, "Maglietta in cotone", "XL", "100% Cotone");
+
+
+
+// creiamo un utente e aggiungiamo 2 prodotti al carrello
+$morgan = new User("morgan", "morgan@gmail.com",12345678,false);
+$morgan->addProductToCart($cat_food);
+$morgan->addProductToCart($cat_toy_mouse);
+$morgan->addProductToCart($tshirt);
+
+// rendiamo un prodotto non disponibile
+$cat_toy_mouse->in_stock = false;
+
+// proviamo ad aggiungerlo al carrello e mostriamo un messaggio se possiamo aggiungerlo oppure no.
+// $result = $morgan->addProductToCart($cat_toy_mouse);
+// if ($result) {
+//     echo "Topo meccanico aggiunto";
+// } else {
+//     echo "Topo Meccanico non è più disponibile";
+// }
+
+// usiam try/catch per mostrare un errore se il prodotto non è disponibile
+try {
+    $morgan->addProductToCart($cat_toy_mouse);
+} catch (\Exception $e) {
+    echo "<p>".$e->getMessage()."</p>";
+}
+
+echo "<br>";
+
+// registriamo l'utente
+echo $morgan->register();
+
+?>
     <!-- Elenchiamo i prodotti -->
     <h2>Prodotti disponibili</h2>
     <ul>

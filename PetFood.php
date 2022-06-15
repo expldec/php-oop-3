@@ -2,8 +2,8 @@
 require_once __DIR__ . "/Product.php";
 
 class PetFood extends Product {
+    use PetSpecific;
     public $weight_grams = 0;
-    public $pet_type;
 
     function __construct($_brand, $_name, $_price, $_description, $_weight_grams, $_pet_type) {
         parent::__construct($_brand, $_name, $_price, $_description);

@@ -2,7 +2,7 @@
 require_once __DIR__ . "/Product.php";
 
 class PetToy extends Product {
-    public $pet_type;
+    use PetSpecific;
 
     function __construct($_brand, $_name, $_price, $_description, $_pet_type) {
         parent::__construct($_brand, $_name, $_price, $_description);
